@@ -6,16 +6,11 @@ module endianness_converter(
     output logic [31:0] converted_word
 );
 
-always_ff @(posedge clk) begin
-    if (endianness_in == endianness_out) begin
+always @(posedge clk) begin
+    if (endianness_in == endianness_out)
         converted_word <= word;
-    end 
-    else begin
-        converted_word[31:24] <= word[7:0];
-        converted_word[23:16] <= word[15:8];
-        converted_word[15:8]  <= word[23:16];
-        converted_word[7:0]   <= word[31:24];
-    end
+    else
+        converted_word <= {word[7:0], word[15:8], word[23:16], word[31:24]};
 end
 
 endmodule
